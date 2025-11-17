@@ -2,19 +2,17 @@ import multer from "multer";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import { mkdir } from 'fs/promises';
 
 // Get the current directory name in ES module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Ensure uploads directory exists
-const uploadsDir = join(__dirname, '../../uploads');
-await mkdir(uploadsDir, { recursive: true });
+// Use the /tmp directory for uploads in serverless environments
+const uploadsDir = join('/tmp', 'uploads');
 
 const storage = multer.diskStorage({
-  destination: async function (req, file, cb) {
-    cb(null, uploadsDir);
+  destination: function (req, file, cb) {
+    cb(null, uploadsDir); // Use /tmp/uploads as the destination
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
