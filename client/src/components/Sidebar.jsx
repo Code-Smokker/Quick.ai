@@ -25,8 +25,7 @@ const Sidebar = ({ sidebar, setSidebar }) => {
         { to: '/ai/dashboard', label: 'Dashboard', icon: House },
         { to: '/ai/write-article', label: 'Write Article', icon: FileEdit },
         { to: '/ai/blog-titles', label: 'Blog Titles', icon: Hash },
-        { to: '/ai/generate-images', label: 'Generate Images', icon: ImageIcon },
-        { to: '/ai/remove-background', label: 'Remove Background', icon: Eraser },
+        { to: '/ai/generate-images', label: 'Generate Images', icon: ImageIcon },,
         { to: '/ai/remove-object', label: 'Remove Object', icon: Scissors },
         { to: '/ai/review-resume', label: 'Review Resume', icon: FileText },
         { 

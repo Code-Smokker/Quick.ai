@@ -14,6 +14,13 @@ import { testConnection } from "./configs/db.js";
 // Initialize Express app
 const app = express();
 
+// Add request logging middleware (add this early in the middleware chain)
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+  console.log('Headers:', req.headers);
+  next();
+});
+
 // Security middleware
 app.use(helmet());
 app.use(helmet.hidePoweredBy());
@@ -29,7 +36,7 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-// Apply rate limiting to all API routes
+// Apply rate limiting to API routes
 app.use('/api/', limiter);
 
 // Enable CORS with specific origin in production
@@ -55,17 +62,17 @@ app.use((req, res, next) => {
   next();
 });
 
+// Body parser middleware with size limits
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
 // Compression middleware
 app.use(compression());
 
 // Request logging
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
-// Body parser middleware with size limits
-app.use(express.json({ limit: '10kb' }));
-app.use(express.urlencoded({ extended: true, limit: '10kb' }));
-
-// Health check endpoint
+// Health check endpoint (public)
 app.get('/api/health', async (req, res) => {
   const dbStatus = await testConnection();
   
@@ -101,14 +108,17 @@ const initializeServices = async () => {
   }
 };
 
-// Protected routes (require authentication)
+// Apply authentication middleware to protected routes
 app.use(clerkMiddleware());
 app.use(requireAuth());
+
+// Protected routes
 app.use('/api/ai', aiRouter);
 app.use('/api/user', userRouter);
 
 // 404 handler
 app.use((req, res) => {
+  console.log('404 - Not Found:', req.originalUrl);
   res.status(404).json({ 
     status: 'error',
     message: 'Not Found',
@@ -118,7 +128,13 @@ app.use((req, res) => {
 
 // Error handling middleware
 const errorHandler = (err, req, res, next) => {
-  console.error('Error:', err);
+  console.error('Error:', {
+    message: err.message,
+    stack: err.stack,
+    url: req.originalUrl,
+    method: req.method,
+    body: req.body
+  });
   
   const statusCode = err.statusCode || 500;
   const message = err.message || 'Internal Server Error';
@@ -136,6 +152,8 @@ const errorHandler = (err, req, res, next) => {
 app.use(errorHandler);
 
 // Handle unhandled promise rejections
+let server; // Declare server variable at the top level
+
 process.on('unhandledRejection', (reason, promise) => {
   console.error('UNHANDLED REJECTION! Shutting down...');
   console.error('Unhandled Rejection at:', promise, 'Reason:', reason);
@@ -153,7 +171,6 @@ process.on('unhandledRejection', (reason, promise) => {
 process.on('uncaughtException', (err) => {
   console.error('UNCAUGHT EXCEPTION! Shutting down...');
   console.error('Error:', err);
-  // Close server & exit process
   process.exit(1);
 });
 
@@ -164,7 +181,7 @@ const startServer = async () => {
   try {
     await initializeServices();
     
-    const server = app.listen(PORT, () => {
+    server = app.listen(PORT, () => {
       console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
     });
 

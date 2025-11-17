@@ -14,6 +14,7 @@
     "@clerk/clerk-react": "^5.45.0",
     "@tailwindcss/vite": "^4.1.11",
     "axios": "^1.6.2",
+    "framer-motion": "^12.23.12",
     "lucide-react": "^0.533.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

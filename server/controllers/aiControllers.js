@@ -310,6 +310,8 @@ export const generateImage = async (req, res) => {
 
 
 
+
+
   export const removeImageObject = async (req, res) => {
     try {
       const userId = req.userId;
