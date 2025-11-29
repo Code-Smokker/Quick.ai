@@ -18,6 +18,11 @@ import { useAuth } from '@clerk/clerk-react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import axios from 'axios';
+
+// Set global base URL for axios
+axios.defaults.baseURL = import.meta.env.VITE_BASE_URL || 'http://localhost:3000';
+
 const App = () => {
   const { isSignedIn } = useAuth();
 
