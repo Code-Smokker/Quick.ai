@@ -7,7 +7,7 @@ import ReactMarkdown from 'react-markdown';
 
 
 
-axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
+// axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
 const ReviewResume = () => {
 

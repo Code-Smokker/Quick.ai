@@ -5,7 +5,7 @@ import { useAuth } from '@clerk/clerk-react';
 import { toast } from 'react-toastify';
 import ReactMarkdown from 'react-markdown';
 
-axios.defaults.baseURL = import.meta.env.VITE_BASE_URL || 'http://localhost:3000';
+// axios.defaults.baseURL = import.meta.env.VITE_BASE_URL || 'http://localhost:3000';
 
 const WriteArticle = () => {
   const articleLength = [

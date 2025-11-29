@@ -4,7 +4,7 @@ import { Heart } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-axios.defaults.baseURL = import.meta.env.VITE_BASE_URL || 'http://localhost:3000';
+// axios.defaults.baseURL = import.meta.env.VITE_BASE_URL || 'http://localhost:3000';
 
 const Community = () => {
   const [creations, setCreations] = useState([]);

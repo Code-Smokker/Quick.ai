@@ -5,7 +5,7 @@ import { useAuth } from '@clerk/clerk-react';
 import { toast } from 'react-toastify';
 
 // Set base URL for axios
-axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
+// axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
 const BolgTitles = () => {
   const { getToken } = useAuth();
