@@ -72,21 +72,21 @@ const RemoveObject = () => {
   };
 
   return (
-    <div className='h-full overflow-y-scroll flex p-6 items-start flex-wrap gap-4 text-slate-700'>
+    <div className='h-full overflow-y-scroll flex p-6 items-start flex-wrap gap-4 text-slate-200'>
       {/* left col */}
-      <form onSubmit={onSubmitHandler} className='w-full max-w-lg bg-white p-4 rounded-lg border border-gray-200'>
+      <form onSubmit={onSubmitHandler} className='w-full max-w-lg bg-slate-800 p-4 rounded-lg border border-slate-700'>
         <div className='flex items-center gap-3'>
           <Sparkles className='w-6 text-[#4A7AFF]' />
-          <h1 className='text-xl font-semibold'>Remove Object</h1>
+          <h1 className='text-xl font-semibold text-white'>Remove Object</h1>
         </div>
-        <p className='mt-6 text-sm font-medium'>Upload Image</p>
-        <input onChange={(e) => setInput(e.target.files[0])} type="file" accept='image/*' className='w-full p-2 px-3 mt-2 outline-none text-sm rounded-md border border-gray-300 text-gray-600'
+        <p className='mt-6 text-sm font-medium text-slate-300'>Upload Image</p>
+        <input onChange={(e) => setInput(e.target.files[0])} type="file" accept='image/*' className='w-full p-2 px-3 mt-2 outline-none text-sm rounded-md border border-slate-600 bg-slate-900 text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-500/20 file:text-blue-400 hover:file:bg-blue-500/30'
           required />
-        <p className='mt-6 text-sm font-medium'>Describe object name to remove</p>
-        <textarea onChange={(e) => setObject(e.target.value)} value={object} rows={4} className='w-full p-2 px-3 mt-2 outline-none text-sm rounded-md border border-gray-300'
+        <p className='mt-6 text-sm font-medium text-slate-300'>Describe object name to remove</p>
+        <textarea onChange={(e) => setObject(e.target.value)} value={object} rows={4} className='w-full p-2 px-3 mt-2 outline-none text-sm rounded-md border border-slate-600 bg-slate-900 text-slate-200 placeholder-slate-500'
           placeholder='e.g.,watch or spoon, Only single object name' required />
         <button disabled={loading} className=' w-full justify-center flex items-center gap-2 bg-gradient-to-r from-[#417DF6] to-[#8E37EB] text-white px-4 py-2 mt-6
-      text-sm rounded-lg cursor-pointer'>
+      text-sm rounded-lg cursor-pointer hover:shadow-lg hover:shadow-blue-500/20 transition-all'>
           {loading ? <span className='w-4 h-4 my-1 rounded-b-full boarder-t-transparent animate-spin'></span>
             : <Scissors className='w-5' />
           }
@@ -94,21 +94,21 @@ const RemoveObject = () => {
         </button>
       </form>
       {/* Right col */}
-      <div className='w-full max-w-lg p-4 bg-white rounded-lg flex flex-col border border-gray-200 min-h-96 '>
+      <div className='w-full max-w-lg p-4 bg-slate-800 rounded-lg flex flex-col border border-slate-700 min-h-96 '>
         <div className='flex items-center gap-3'>
           <Scissors className='w-5 h-5 text-[#4A7AFF]' />
-          <h1 className='text-xl font-semibold'>Processed Image</h1>
+          <h1 className='text-xl font-semibold text-white'>Processed Image</h1>
         </div>
         {
           !content ? (
             <div className='flex flex-1 justify-center items-center min-h-[300px]'>
-              <div className='text-sm flex flex-col items-center gap-5 text-gray-400'>
-                <Scissors className='w-9 h-9' />
+              <div className='text-sm flex flex-col items-center gap-5 text-slate-500'>
+                <Scissors className='w-9 h-9 opacity-50' />
                 <p>Upload an image and click "Remove Object" to get started</p>
               </div>
             </div>
           ) : (
-            <img src={content} alt="Processed content" className='mt-3 w-full h-full' />
+            <img src={content} alt="Processed content" className='mt-3 w-full h-full rounded-md shadow-lg' />
           )
         }
       </div>

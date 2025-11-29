@@ -14,6 +14,19 @@ import { testConnection } from "./configs/db.js";
 // Initialize Express app
 const app = express();
 
+// Enable CORS with specific origin in production
+// Enable CORS with specific origin in production
+const corsOptions = {
+  origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:3000'], // Explicitly allow frontend origins
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-clerk-auth-reason', 'x-clerk-auth-message'],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+
 // Add request logging middleware (add this early in the middleware chain)
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
@@ -39,28 +52,7 @@ const limiter = rateLimit({
 // Apply rate limiting to API routes
 app.use('/api/', limiter);
 
-// Enable CORS with specific origin in production
-const corsOptions = {
-  origin: ['http://localhost:5173', 'http://localhost:3000', process.env.FRONTEND_URL].filter(Boolean),
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'x-clerk-auth-reason', 'x-clerk-auth-message'],
-  credentials: true,
-  optionsSuccessStatus: 200
-};
-
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
-
-// Handle preflight requests
-app.use((req, res, next) => {
-  if (req.method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.header('Access-Control-Allow-Credentials', true);
-    return res.status(200).json({});
-  }
-  next();
-});
+// Body parser middleware with size limits
 
 // Body parser middleware with size limits
 app.use(express.json({ limit: '10mb' }));
@@ -75,8 +67,8 @@ app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 // Health check endpoint (public)
 app.get('/api/health', async (req, res) => {
   const dbStatus = await testConnection();
-  
-  res.status(dbStatus ? 200 : 503).json({ 
+
+  res.status(dbStatus ? 200 : 503).json({
     status: dbStatus ? 'ok' : 'error',
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
@@ -94,13 +86,13 @@ const initializeServices = async () => {
     // Initialize Cloudinary
     await cloudinaryConfig();
     console.log('Cloudinary initialized successfully');
-    
+
     // Test database connection
     const dbConnected = await testConnection();
     if (!dbConnected) {
       throw new Error('Failed to connect to the database');
     }
-    
+
     console.log('All services initialized successfully');
   } catch (error) {
     console.error('Failed to initialize services:', error);
@@ -119,7 +111,7 @@ app.use('/api/user', userRouter);
 // 404 handler
 app.use((req, res) => {
   console.log('404 - Not Found:', req.originalUrl);
-  res.status(404).json({ 
+  res.status(404).json({
     status: 'error',
     message: 'Not Found',
     path: req.originalUrl
@@ -135,10 +127,10 @@ const errorHandler = (err, req, res, next) => {
     method: req.method,
     body: req.body
   });
-  
+
   const statusCode = err.statusCode || 500;
   const message = err.message || 'Internal Server Error';
-  
+
   res.status(statusCode).json({
     status: 'error',
     message,
@@ -180,7 +172,7 @@ const PORT = process.env.PORT || 3000;
 const startServer = async () => {
   try {
     await initializeServices();
-    
+
     server = app.listen(PORT, () => {
       console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
     });
@@ -193,7 +185,7 @@ const startServer = async () => {
       }
       throw error;
     });
-    
+
     // Graceful shutdown
     process.on('SIGTERM', () => {
       console.log('SIGTERM received. Shutting down gracefully...');
@@ -201,7 +193,7 @@ const startServer = async () => {
         console.log('Process terminated');
       });
     });
-    
+
     process.on('SIGINT', () => {
       console.log('SIGINT received. Shutting down gracefully...');
       server.close(() => {
@@ -209,7 +201,7 @@ const startServer = async () => {
         process.exit(0);
       });
     });
-    
+
     return server;
   } catch (error) {
     console.error('Failed to start server:', error);

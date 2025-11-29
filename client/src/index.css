@@ -1,18 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
 
-*{
-    font-family: "Roboto", sans-serif;
+* {
+    font-family: "Outfit", sans-serif;
+}
+
+body {
+    @apply bg-slate-950 text-slate-200;
 }
 
 @theme {
     --color-primary: #5044f5;
 }
 
-.reset-tw, .reset-tw *{
+.reset-tw,
+.reset-tw * {
     all: revert !important;
 }
 
-.cl-drawerRoot{
+.cl-drawerRoot {
     z-index: 10;
 }

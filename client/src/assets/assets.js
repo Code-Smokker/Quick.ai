@@ -5,7 +5,7 @@ import star_icon from "./star_icon.svg";
 import star_dull_icon from "./star_dull_icon.svg";
 import profile_img_1 from "./profile_img_1.png";
 import arrow_icon from "./arrow_icon.svg";
-import { SquarePen, Hash, Image, Eraser, Scissors, FileText } from 'lucide-react'
+
 import ai_gen_img_1 from "./ai_gen_img_1.png";
 import ai_gen_img_2 from "./ai_gen_img_2.png";
 import ai_gen_img_3 from "./ai_gen_img_3.png";
@@ -20,50 +20,83 @@ export const assets = {
     arrow_icon,
 };
 
+import {
+    Rocket,
+    FileVideo,
+    Type,
+    Image as ImageIcon,
+    Layout,
+    Sparkles,
+    Scissors,
+    PenTool,
+    Hash
+} from 'lucide-react';
+
 export const AiToolsData = [
     {
-        title: 'AI Article Writer',
-        description: 'Generate high-quality, engaging articles on any topic with our AI writing technology.',
-        Icon: SquarePen,
-        bg: { from: '#3588F2', to: '#0BB0D7' },
-        path: '/ai/write-article'
+        title: "AI Video/Ads Generator",
+        description: "Create engaging video ads and commercials instantly with AI.",
+        Icon: Rocket,
+        path: '/video-generator',
+        bg: { from: '#8B5CF6', to: '#3B82F6' } // Purple to Blue
     },
     {
-        title: 'Blog Title Generator',
-        description: 'Find the perfect, catchy title for your blog posts with our AI-powered generator.',
-        Icon: Hash,
-        bg: { from: '#B153EA', to: '#E549A3' },
-        path: '/ai/blog-titles'
+        title: "Video Script",
+        description: "Generate viral scripts for YouTube, TikTok, and Reels.",
+        Icon: FileVideo,
+        path: '/video-script',
+        bg: { from: '#EC4899', to: '#8B5CF6' } // Pink to Purple
     },
     {
-        title: 'AI Image Generation',
-        description: 'Create stunning visuals with our AI image generation tool, Experience the power of AI ',
-        Icon: Image,
-        bg: { from: '#20C363', to: '#11B97E' },
-        path: '/ai/generate-images'
+        title: "Titles & SEO",
+        description: "Optimize your content with SEO-friendly titles and tags.",
+        Icon: Type,
+        path: '/titles-seo',
+        bg: { from: '#F59E0B', to: '#EF4444' } // Orange to Red
     },
     {
-        title: 'Background Removal',
-        description: 'Effortlessly remove backgrounds from your images with our AI-driven tool.',
-        Icon: Eraser,
-        bg: { from: '#F76C1C', to: '#F04A3C' },
-        path: '/ai/remove-background'
+        title: "Image Prompts",
+        description: "Get detailed, high-quality prompts for AI image generation.",
+        Icon: ImageIcon,
+        path: '/image-prompts',
+        bg: { from: '#10B981', to: '#3B82F6' } // Green to Blue
     },
     {
-        title: 'Object Removal',
-        description: 'Remove unwanted objects from your images seamlessly with our AI object removal tool.',
+        title: "Banner Generator",
+        description: "Design professional social media banners and headers.",
+        Icon: Layout,
+        path: '/banner-generator',
+        bg: { from: '#6366F1', to: '#EC4899' } // Indigo to Pink
+    },
+    {
+        title: "Generate Images",
+        description: "Turn text into stunning visual art using advanced AI models.",
+        Icon: Sparkles,
+        path: '/generate-images',
+        bg: { from: '#F472B6', to: '#DB2777' } // Pink gradients
+    },
+    {
+        title: "Remove Object",
+        description: "Clean up images by magically removing unwanted objects.",
         Icon: Scissors,
-        bg: { from: '#5C6AF1', to: '#427DF5' },
-        path: '/ai/remove-object'
+        path: '/remove-object',
+        bg: { from: '#EF4444', to: '#F97316' } // Red to Orange
     },
     {
-        title: 'Resume Reviewer',
-        description: 'Get your resume reviewed by AI to improve your chances of landing your dream job.',
-        Icon: FileText,
-        bg: { from: '#12B7AC', to: '#08B6CE' },
-        path: '/ai/review-resume'
+        title: "Write Article",
+        description: "Generate full-length SEO blog posts and articles.",
+        Icon: PenTool,
+        path: '/write-article',
+        bg: { from: '#3B82F6', to: '#2563EB' } // Blue gradients
+    },
+    {
+        title: "Blog Titles",
+        description: "Catchy and clickable titles for your blog posts.",
+        Icon: Hash,
+        path: '/blog-titles',
+        bg: { from: '#8B5CF6', to: '#4C1D95' } // Deep Purple
     }
-]
+];
 
 export const dummyTestimonialData = [
     {

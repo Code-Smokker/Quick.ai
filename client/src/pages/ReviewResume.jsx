@@ -17,7 +17,7 @@ const ReviewResume = () => {
   const [content, setContent] = useState('');
 
   const { getToken } = useAuth();
-    
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -56,60 +56,60 @@ const ReviewResume = () => {
 
 
   return (
-    <div className='h-full overflow-y-scroll flex p-6 items-start flex-wrap gap-4 text-slate-700'>
+    <div className='h-full overflow-y-scroll flex p-6 items-start flex-wrap gap-4 text-slate-200'>
       {/* left col */}
-      <form onSubmit={onSubmitHandler} className='w-full max-w-lg bg-white p-4 rounded-lg border border-gray-200'> 
+      <form onSubmit={onSubmitHandler} className='w-full max-w-lg bg-slate-800 p-4 rounded-lg border border-slate-700'>
         <div className='flex items-center gap-3'>
-          <Sparkles  className='w-6 text-[#00DA83]'/>
-          <h1 className='text-xl font-semibold'>Resume Review</h1>
+          <Sparkles className='w-6 text-[#00DA83]' />
+          <h1 className='text-xl font-semibold text-white'>Resume Review</h1>
         </div>
-        <p className='mt-6 text-sm font-medium'>Upload Resume</p>
-        <input onChange={(e)=> setInput(e.target.files[0])} type="file" accept='application/pdf' className='w-full p-2 px-3 mt-2 outline-none text-sm rounded-md border border-gray-300 text-gray-600' 
-         required/>
-       
-        <p className='text-xs text-gray-500 font-light mt-1'>Supports PDF resume only</p>
-        
+        <p className='mt-6 text-sm font-medium text-slate-300'>Upload Resume</p>
+        <input onChange={(e) => setInput(e.target.files[0])} type="file" accept='application/pdf' className='w-full p-2 px-3 mt-2 outline-none text-sm rounded-md border border-slate-600 bg-slate-900 text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-500/20 file:text-green-400 hover:file:bg-green-500/30'
+          required />
+
+        <p className='text-xs text-slate-500 font-light mt-1'>Supports PDF resume only</p>
+
         <button className=' w-full justify-center flex items-center gap-2 bg-gradient-to-r from-[#00DA83] to-[#009BB3] text-white px-4 py-2 mt-6 
-        text-sm rounded-lg cursor-pointer'>
+        text-sm rounded-lg cursor-pointer hover:shadow-lg hover:shadow-green-500/20 transition-all'>
           {
             loading ? <span className='w-4 h-4 my-1 rounded-b-full boarder-t-transparent animate-spin'></span>
-            : <FileText className='w-5'/>
+              : <FileText className='w-5' />
           }
           Review Resume
-          
-          
+
+
         </button>
       </form>
-       {/* Right col */}
-       <div className='w-full max-w-lg p-4 bg-white rounded-lg flex flex-col border border-gray-200 min-h-96 max-h-[600px]'>
+      {/* Right col */}
+      <div className='w-full max-w-lg p-4 bg-slate-800 rounded-lg flex flex-col border border-slate-700 min-h-96 max-h-[600px]'>
         <div className='flex items-center gap-3'>
-          <FileText  className='w-5 h-5 text-[#00DA83]'/>
-          <h1 className='text-xl font-semibold'>Analysis Results</h1>
+          <FileText className='w-5 h-5 text-[#00DA83]' />
+          <h1 className='text-xl font-semibold text-white'>Analysis Results</h1>
         </div>
         {
           !content ? (
             <div className='flex flex-1 justify-center items-center min-h-[300px]'>
-          <div className='text-sm flex flex-col items-center gap-5 text-gray-400'>
-            <FileText  className='w-9 h-9'/>
-            <p>Upload a resume and click "Review Resume" to get started</p>
+              <div className='text-sm flex flex-col items-center gap-5 text-slate-500'>
+                <FileText className='w-9 h-9 opacity-50' />
+                <p>Upload a resume and click "Review Resume" to get started</p>
 
-          </div>
-
-        </div>
-          ): 
-          (
-            <div className='mt-3 h-full overflow-y-scroll text-sm text-slate-600'>
-              <div className='reset-tw'>
-                <ReactMarkdown>{content}</ReactMarkdown>
               </div>
+
             </div>
-          )
+          ) :
+            (
+              <div className='mt-3 h-full overflow-y-scroll text-sm text-slate-300'>
+                <div className='reset-tw prose prose-invert max-w-none'>
+                  <ReactMarkdown>{content}</ReactMarkdown>
+                </div>
+              </div>
+            )
 
         }
-        
 
 
-       </div>
+
+      </div>
     </div>
   )
 }
