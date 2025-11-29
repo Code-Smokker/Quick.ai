@@ -308,11 +308,6 @@ export const generateImage = async (req, res) => {
   }
 };
 
-const removeImageBackground = (req, res) => {
-  // Your function logic here
-};
-
-export default removeImageBackground;
 
   export const removeImageObject = async (req, res) => {
     try {
